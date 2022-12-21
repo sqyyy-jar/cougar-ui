@@ -5,7 +5,11 @@ import com.github.sqyyy.cougar.plugin.CougarDatasetPlugin
 import com.github.sqyyy.cougar.plugin.Entry
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.inventory.*
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCreativeEvent
+import org.bukkit.event.inventory.InventoryDragEvent
+import org.bukkit.event.inventory.InventoryEvent
+import org.bukkit.event.inventory.InventoryInteractEvent
 
 class InventoryListener(private val cougar: CougarDatasetPlugin) : Listener {
     @EventHandler
@@ -25,14 +29,8 @@ class InventoryListener(private val cougar: CougarDatasetPlugin) : Listener {
             return
         }
         val entry = Entry(
-            event,
-            event.eventName,
-            event.action,
-            event.click,
-            event.slotType,
-            event.isLeftClick,
-            event.isRightClick,
-            event.isShiftClick
+            event, event.eventName, event.action, event.click, event.slotType, event.isLeftClick,
+            event.isRightClick, event.isShiftClick
         )
         dataset += entry
     }
@@ -54,14 +52,8 @@ class InventoryListener(private val cougar: CougarDatasetPlugin) : Listener {
             return
         }
         val entry = Entry(
-            event,
-            event.eventName,
-            event.action,
-            event.click,
-            event.slotType,
-            event.isLeftClick,
-            event.isRightClick,
-            event.isShiftClick
+            event, event.eventName, event.action, event.click, event.slotType, event.isLeftClick,
+            event.isRightClick, event.isShiftClick
         )
         dataset += entry
     }

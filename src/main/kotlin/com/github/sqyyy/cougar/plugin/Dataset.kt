@@ -16,7 +16,7 @@ data class Entry(
     val leftClick: Boolean? = null,
     val rightClick: Boolean? = null,
     val shiftClick: Boolean? = null,
-    val dragType: DragType? = null
+    val dragType: DragType? = null,
 ) {
     override fun toString(): String {
         val string = StringBuilder()
