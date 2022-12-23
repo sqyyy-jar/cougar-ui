@@ -97,4 +97,16 @@ enum class Slot(val row: Int, val column: Int) {
         get() = this.row * 3 + this.column
     val hopperSlot
         get() = this.column
+
+    companion object {
+        @JvmStatic
+        fun getRow(rowWidth: Int, slot: Int): Int {
+            return (slot - slot % rowWidth) / rowWidth
+        }
+
+        @JvmStatic
+        fun getColumn(rowWidth: Int, slot: Int): Int {
+            return slot % rowWidth
+        }
+    }
 }
