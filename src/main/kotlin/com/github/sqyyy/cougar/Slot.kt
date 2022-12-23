@@ -92,9 +92,9 @@ enum class Slot(val row: Int, val column: Int) {
     RowNineSlotNine(8, 8);
 
     val chestSlot
-        get() = row * 9 + column
+        get() = this.row * 9 + this.column
     val dispenserSlot
-        get() = row * 3 + column
+        get() = this.row * 3 + this.column
     val hopperSlot
-        get() = column
+        get() = this.column
 }
