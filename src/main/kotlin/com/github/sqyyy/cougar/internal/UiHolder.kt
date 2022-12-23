@@ -31,7 +31,10 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             event.isCancelled = true
             return
         }
-        ui.placeMany(event.rawSlots.filter { it < ui.slots }.toSet())
+        event.isCancelled = ui.placeMany(
+            event.whoClicked as Player, event.view,
+            event.newItems.filter { it.key < ui.slots }.toMap()
+        )
     }
 
     fun onClick(event: InventoryClickEvent, @Suppress("UNUSED_PARAMETER") creative: Boolean) {
@@ -54,11 +57,11 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                 if (!ui.canTake(slot)) {
                     event.isCancelled = true
                     if (ui.canClick(slot)) {
-                        ui.click(slot)
+                        ui.click(event.whoClicked as Player, event.view, slot)
                     }
                     return
                 }
-                ui.take(slot)
+                event.isCancelled = ui.take(event.whoClicked as Player, event.view, slot)
             }
             InventoryAction.PLACE_ALL,
             InventoryAction.PLACE_SOME,
@@ -70,11 +73,11 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                 if (!ui.canPlace(slot)) {
                     event.isCancelled = true
                     if (ui.canClick(slot)) {
-                        ui.click(slot)
+                        ui.click(event.whoClicked as Player, event.view, slot)
                     }
                     return
                 }
-                ui.place(slot)
+                event.isCancelled = ui.place(event.whoClicked as Player, event.view, slot, event.currentItem!!)
             }
             InventoryAction.SWAP_WITH_CURSOR,
             InventoryAction.HOTBAR_MOVE_AND_READD,
@@ -85,36 +88,36 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                 if (!ui.canTake(slot) || !ui.canPlace(slot)) {
                     event.isCancelled = true
                     if (ui.canClick(slot)) {
-                        ui.click(slot)
+                        ui.click(event.whoClicked as Player, event.view, slot)
                     }
                     return
                 }
-                ui.replace(slot)
+                event.isCancelled = ui.replace(event.whoClicked as Player, event.view, slot)
             }
             InventoryAction.HOTBAR_SWAP -> {
                 if (!uiClick) {
                     return
                 }
-                val place = event.currentItem?.type == Material.AIR
+                val place = event.currentItem == null || event.currentItem!!.type == Material.AIR
                 if (place) {
                     if (!ui.canPlace(slot)) {
                         event.isCancelled = true
                         if (ui.canClick(slot)) {
-                            ui.click(slot)
+                            ui.click(event.whoClicked as Player, event.view, slot)
                         }
                         return
                     }
-                    ui.place(slot)
+                    event.isCancelled = ui.place(event.whoClicked as Player, event.view, slot, event.currentItem!!)
                     return
                 }
                 if (!ui.canTake(slot)) {
                     event.isCancelled = true
                     if (ui.canClick(slot)) {
-                        ui.click(slot)
+                        ui.click(event.whoClicked as Player, event.view, slot)
                     }
                     return
                 }
-                ui.take(slot)
+                event.isCancelled = ui.take(event.whoClicked as Player, event.view, slot)
             }
             InventoryAction.MOVE_TO_OTHER_INVENTORY -> {
                 if (event.currentItem == null) {
@@ -128,11 +131,11 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     if (!ui.canTake(slot)) {
                         event.isCancelled = true
                         if (ui.canClick(slot)) {
-                            ui.click(slot)
+                            ui.click(event.whoClicked as Player, event.view, slot)
                         }
                         return
                     }
-                    ui.take(slot)
+                    event.isCancelled = ui.take(event.whoClicked as Player, event.view, slot)
                     return
                 }
                 val inventory = inventory!!
