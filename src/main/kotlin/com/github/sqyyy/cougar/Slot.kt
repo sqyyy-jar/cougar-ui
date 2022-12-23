@@ -1,4 +1,4 @@
-package com.github.sqyyy.cougar.plugin
+package com.github.sqyyy.cougar
 
 enum class Slot(val row: Int, val column: Int) {
     RowOneSlotOne(0, 0),
