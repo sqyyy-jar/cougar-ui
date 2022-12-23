@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin
 object Cougar {
     private var initialized = false
 
+    @JvmStatic
     fun initializeSystem(plugin: Plugin) {
         if (initialized) {
             throw IllegalStateException("Cougar is already initialized")
