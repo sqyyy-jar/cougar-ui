@@ -1,7 +1,6 @@
 package com.github.sqyyy.cougar.impl
 
 import com.github.sqyyy.cougar.Panel
-import com.github.sqyyy.cougar.Slot
 import com.github.sqyyy.cougar.Ui
 import com.github.sqyyy.cougar.internal.UiHolder
 import net.kyori.adventure.text.Component
@@ -13,7 +12,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.Range
-import java.util.*
 
 class PaperUi : Ui {
     override val type: InventoryType
@@ -82,48 +80,6 @@ class PaperUi : Ui {
                 }
             }
         }
-    }
-
-    operator fun List<List<Panel>>.unaryPlus() {
-        this.forEachIndexed { index, panel ->
-            if (panels.size <= index) {
-                return@forEachIndexed
-            }
-            if (panels[index] == null) {
-                panels[index] = mutableListOf()
-            }
-            panels[index]?.addAll(panel)
-        }
-        Arrays.fill(clickMap, false)
-        Arrays.fill(placeMap, false)
-        Arrays.fill(takeMap, false)
-        for (slot in 0 until slots) {
-            for (panelList in panels) {
-                panelList?.forEach {
-                    if (it.collidesWith(slot)) {
-                        clickMap[slot] = clickMap[slot] || it.canClick(slot)
-                        placeMap[slot] = it.canPlace(slot)
-                        takeMap[slot] = it.canTake(slot)
-                    }
-                }
-            }
-        }
-    }
-
-    fun fill(priority: @Range(from = 0, to = 15) Int, from: Slot, to: Slot, fillItem: ItemStack) {
-        if (panels[priority] == null) {
-            panels[priority] = mutableListOf()
-        }
-        panels[priority]?.add(
-            when (type) {
-                InventoryType.CHEST -> FillPanel(from.chestSlot, to.chestSlot, fillItem, 9)
-                InventoryType.DISPENSER,
-                InventoryType.DROPPER,
-                -> FillPanel(from.dispenserSlot, to.dispenserSlot, fillItem, 3)
-                InventoryType.HOPPER -> FillPanel(from.hopperSlot, to.hopperSlot, fillItem, 5)
-                else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
-            }
-        )
     }
 
     override fun close(player: Player, reason: InventoryCloseEvent.Reason) {
@@ -215,22 +171,4 @@ class PaperUi : Ui {
         }
         player.openInventory(inventory)
     }
-}
-
-fun chestUi(title: Component, rows: Int, builder: PaperUi.() -> Unit): PaperUi {
-    val res = PaperUi(title, rows)
-    builder(res)
-    return res
-}
-
-fun dispenserUi(title: Component, builder: PaperUi.() -> Unit): PaperUi {
-    val res = PaperUi(title, InventoryType.DISPENSER)
-    builder(res)
-    return res
-}
-
-fun hopperUi(title: Component, builder: PaperUi.() -> Unit): PaperUi {
-    val res = PaperUi(title, InventoryType.HOPPER)
-    builder(res)
-    return res
 }
