@@ -8,15 +8,15 @@ import org.bukkit.inventory.ItemStack
 interface Panel {
     fun collidesWith(slot: Int): Boolean
 
-    fun click(player: Player, view: InventoryView, slot: Int): Boolean
+    fun click(player: Player, view: InventoryView, slot: Int): Boolean = true
 
-    fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
+    fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean = true
 
-    fun placeMany(player: Player, view: InventoryView, items: Map<Int, ItemStack>): Boolean
+    fun placeMany(player: Player, view: InventoryView, items: Map<Int, ItemStack>): Boolean = true
 
-    fun take(player: Player, view: InventoryView, slot: Int): Boolean
+    fun take(player: Player, view: InventoryView, slot: Int): Boolean = true
 
-    fun replace(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
+    fun replace(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean = true
 
     fun canClick(slot: Int): Boolean
 
@@ -26,5 +26,5 @@ interface Panel {
 
     fun open(player: Player, view: InventoryView)
 
-    fun close(player: Player, reason: InventoryCloseEvent.Reason)
+    fun close(player: Player, reason: InventoryCloseEvent.Reason) {}
 }
