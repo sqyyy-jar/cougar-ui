@@ -8,11 +8,12 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryType
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.Range
 
-class PaperUiImpl : Ui {
+class PaperUi : Ui {
     override val type: InventoryType
     override val rows: Int
     override val slots: Int
@@ -29,7 +30,15 @@ class PaperUiImpl : Ui {
         this.slots = rows * 9
         this.title = title
         this.panels = arrayOfNulls(16)
-        panels.forEachIndexed { index, panel -> this.panels.getOrNull(index)?.addAll(panel) }
+        panels.forEachIndexed { index, panel ->
+            if (this.panels.size <= index) {
+                return@forEachIndexed
+            }
+            if (this.panels[index] == null) {
+                this.panels[index] = mutableListOf()
+            }
+            this.panels[index]?.addAll(panel)
+        }
         this.clickMap = BooleanArray(this.slots) { false }
         this.placeMap = BooleanArray(this.slots) { false }
         this.takeMap = BooleanArray(this.slots) { false }
@@ -68,7 +77,15 @@ class PaperUiImpl : Ui {
         }
         this.title = title
         this.panels = arrayOfNulls(16)
-        panels.forEachIndexed { index, panel -> this.panels.getOrNull(index)?.addAll(panel) }
+        panels.forEachIndexed { index, panel ->
+            if (this.panels.size <= index) {
+                return@forEachIndexed
+            }
+            if (this.panels[index] == null) {
+                this.panels[index] = mutableListOf()
+            }
+            this.panels[index]?.addAll(panel)
+        }
         this.clickMap = BooleanArray(this.slots) { false }
         this.placeMap = BooleanArray(this.slots) { false }
         this.takeMap = BooleanArray(this.slots) { false }
@@ -161,9 +178,15 @@ class PaperUiImpl : Ui {
     override fun canTake(slot: Int): Boolean = this.takeMap[slot]
 
     override fun open(player: Player) {
+        val inventory: Inventory
         val holder = UiHolder(this)
-        val inventory = Bukkit.createInventory(holder, this.type, this.title)
-        for (panelList in this.panels) {
+        inventory = if (type == InventoryType.CHEST) {
+            Bukkit.createInventory(holder, slots, title)
+        } else {
+            Bukkit.createInventory(holder, type, title)
+        }
+        holder.inventory = inventory
+        for (panelList in panels) {
             panelList?.forEach { it.open(player, inventory) }
         }
         player.openInventory(inventory)
