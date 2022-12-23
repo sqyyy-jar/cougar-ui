@@ -24,57 +24,33 @@ class PaperUi : Ui {
     private val takeMap: BooleanArray
 
     @JvmOverloads
-    constructor(rows: @Range(from = 1, to = 6) Int, title: Component, panels: List<List<Panel>> = listOf()) {
-        this.type = InventoryType.CHEST
-        this.rows = rows
-        this.slots = rows * 9
-        this.title = title
-        this.panels = arrayOfNulls(16)
-        panels.forEachIndexed { index, panel ->
-            if (this.panels.size <= index) {
-                return@forEachIndexed
-            }
-            if (this.panels[index] == null) {
-                this.panels[index] = mutableListOf()
-            }
-            this.panels[index]?.addAll(panel)
-        }
-        this.clickMap = BooleanArray(this.slots) { false }
-        this.placeMap = BooleanArray(this.slots) { false }
-        this.takeMap = BooleanArray(this.slots) { false }
-        for (slot in 0 until this.slots) {
-            for (panelList in this.panels) {
-                panelList?.forEach {
-                    if (it.collidesWith(slot)) {
-                        this.clickMap[slot] = this.clickMap[slot] || it.canClick(slot)
-                        this.placeMap[slot] = it.canPlace(slot)
-                        this.takeMap[slot] = it.canTake(slot)
-                    }
-                }
-            }
-        }
-    }
+    constructor(rows: @Range(from = 1, to = 6) Int, title: Component, panels: List<List<Panel>> = listOf()) : this(
+        InventoryType.CHEST, rows, rows * 9, title, panels
+    )
 
     @JvmOverloads
-    constructor(type: InventoryType, title: Component, panels: List<List<Panel>> = listOf()) {
-        this.type = type
-        when (this.type) {
-            InventoryType.CHEST -> {
-                this.rows = 3
-                this.slots = 3 * 9
-            }
+    constructor(type: InventoryType, title: Component, panels: List<List<Panel>> = listOf()) : this(
+        type, when (type) {
+            InventoryType.CHEST,
             InventoryType.DISPENSER,
             InventoryType.DROPPER,
-            -> {
-                this.rows = 3
-                this.slots = 9
-            }
-            InventoryType.HOPPER -> {
-                this.rows = 1
-                this.slots = 5
-            }
+            -> 3
+            InventoryType.HOPPER -> 1
             else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
-        }
+        }, when (type) {
+            InventoryType.CHEST -> 3 * 9
+            InventoryType.DISPENSER,
+            InventoryType.DROPPER,
+            -> 9
+            InventoryType.HOPPER -> 5
+            else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
+        }, title, panels
+    )
+
+    private constructor(type: InventoryType, rows: Int, slots: Int, title: Component, panels: List<List<Panel>>) {
+        this.type = type
+        this.rows = rows
+        this.slots = slots
         this.title = title
         this.panels = arrayOfNulls(16)
         panels.forEachIndexed { index, panel ->
