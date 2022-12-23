@@ -2,7 +2,9 @@ package com.github.sqyyy.cougar.impl
 
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Ui
+import com.github.sqyyy.cougar.internal.UiHolder
 import net.kyori.adventure.text.Component
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryType
@@ -84,15 +86,15 @@ class PaperUiImpl : Ui {
     }
 
     override fun close(player: Player, reason: InventoryCloseEvent.Reason) {
-        for (panel in this.panels) {
-            panel?.forEach { it.close(player, reason) }
+        for (panelList in this.panels) {
+            panelList?.forEach { it.close(player, reason) }
         }
     }
 
     override fun click(player: Player, view: InventoryView, slot: Int): Boolean {
         var res = false
-        for (panel in this.panels) {
-            panel?.forEach {
+        for (panelList in this.panels) {
+            panelList?.forEach {
                 if (it.collidesWith(slot) && it.canClick(slot)) {
                     res = it.click(player, view, slot)
                 }
@@ -103,8 +105,8 @@ class PaperUiImpl : Ui {
 
     override fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean {
         var res = false
-        for (panel in this.panels) {
-            panel?.forEach {
+        for (panelList in this.panels) {
+            panelList?.forEach {
                 if (it.collidesWith(slot) && it.canPlace(slot)) {
                     res = it.place(player, view, slot, item)
                 }
@@ -115,12 +117,12 @@ class PaperUiImpl : Ui {
 
     override fun placeMany(player: Player, view: InventoryView, items: Map<Int, ItemStack>): Boolean {
         var res = false
-        for (panel in this.panels) {
-            panel?.forEach {
+        for (panelList in this.panels) {
+            panelList?.forEach {
                 for (item in items) {
                     if (it.collidesWith(item.key) && it.canPlace(item.key)) {
                         res = it.placeMany(player, view, items)
-                        break;
+                        break
                     }
                 }
             }
@@ -130,8 +132,8 @@ class PaperUiImpl : Ui {
 
     override fun take(player: Player, view: InventoryView, slot: Int): Boolean {
         var res = false
-        for (panel in this.panels) {
-            panel?.forEach {
+        for (panelList in this.panels) {
+            panelList?.forEach {
                 if (it.collidesWith(slot) && it.canTake(slot)) {
                     res = it.take(player, view, slot)
                 }
@@ -142,8 +144,8 @@ class PaperUiImpl : Ui {
 
     override fun replace(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean {
         var res = false
-        for (panel in this.panels) {
-            panel?.forEach {
+        for (panelList in this.panels) {
+            panelList?.forEach {
                 if (it.collidesWith(slot) && it.canPlace(slot) && it.canTake(slot)) {
                     res = it.replace(player, view, slot, item)
                 }
@@ -159,6 +161,11 @@ class PaperUiImpl : Ui {
     override fun canTake(slot: Int): Boolean = this.takeMap[slot]
 
     override fun open(player: Player) {
-        TODO("Not yet implemented")
+        val holder = UiHolder(this)
+        val inventory = Bukkit.createInventory(holder, this.type, this.title)
+        for (panelList in this.panels) {
+            panelList?.forEach { it.open(player, inventory) }
+        }
+        player.openInventory(inventory)
     }
 }
