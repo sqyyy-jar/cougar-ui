@@ -25,6 +25,8 @@ interface Ui {
 
     fun replace(slot: Int) // TODO
 
+    fun canClick(slot: Int): Boolean
+
     fun canPlace(slot: Int): Boolean
 
     fun canTake(slot: Int): Boolean
