@@ -3,7 +3,7 @@ package com.github.sqyyy.cougar.impl
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Slot
 import org.bukkit.entity.Player
-import org.bukkit.inventory.InventoryView
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 class FillPanel(
@@ -26,8 +26,7 @@ class FillPanel(
 
     override fun canTake(slot: Int): Boolean = false
 
-    override fun open(player: Player, view: InventoryView) {
-        val inventory = view.topInventory
+    override fun open(player: Player, inventory: Inventory) {
         for (row in this.startRow..this.endRow) {
             for (column in this.startColumn..this.endColumn) {
                 inventory.setItem(row * this.rowWidth + column, this.fillItem)

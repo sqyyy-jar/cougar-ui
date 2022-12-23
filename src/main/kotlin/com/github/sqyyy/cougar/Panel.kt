@@ -25,7 +25,7 @@ interface Panel {
 
     fun canTake(slot: Int): Boolean
 
-    fun open(player: Player, view: Inventory) {}
+    fun open(player: Player, inventory: Inventory) {}
 
     fun close(player: Player, reason: InventoryCloseEvent.Reason) {}
 }
