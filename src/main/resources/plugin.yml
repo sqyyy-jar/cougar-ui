@@ -6,6 +6,4 @@ libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:1.7.22
 commands:
   cougar:
-    usage: /cougar <name>?
-  cougarprint:
-    usage: /cougarprint
+    usage: /cougar
