@@ -1,29 +1,27 @@
 package com.github.sqyyy.cougar
 
-import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent.Reason
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
 
 interface Ui {
     val type: InventoryType
     val rows: Int
     val slots: Int
-    val title: Component
 
     fun close(player: Player, reason: Reason)
 
-    fun click(slot: Int) // TODO
+    fun click(player: Player, view: InventoryView, slot: Int): Boolean
 
-    fun place(slot: Int) // TODO
+    fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
 
-    fun placeMany(slots: Set<Int>) // TODO
+    fun placeMany(player: Player, view: InventoryView, items: Map<Int, ItemStack>): Boolean
 
-    fun take(slot: Int) // TODO
+    fun take(player: Player, view: InventoryView, slot: Int): Boolean
 
-    fun replace(slot: Int) // TODO
+    fun replace(player: Player, view: InventoryView, slot: Int): Boolean
 
     fun canClick(slot: Int): Boolean
 
@@ -31,5 +29,5 @@ interface Ui {
 
     fun canTake(slot: Int): Boolean
 
-    fun nextPlaceableSlot(inventory: Inventory, itemStack: ItemStack): Int
+    fun open(player: Player)
 }
