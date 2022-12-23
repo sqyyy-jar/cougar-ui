@@ -2,6 +2,7 @@ package com.github.sqyyy.cougar
 
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
 
@@ -24,7 +25,7 @@ interface Panel {
 
     fun canTake(slot: Int): Boolean
 
-    fun open(player: Player, view: InventoryView) {}
+    fun open(player: Player, view: Inventory) {}
 
     fun close(player: Player, reason: InventoryCloseEvent.Reason) {}
 }
