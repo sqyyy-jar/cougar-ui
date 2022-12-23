@@ -11,8 +11,6 @@ interface Ui {
     val rows: Int
     val slots: Int
 
-    fun close(player: Player, reason: Reason)
-
     fun click(player: Player, view: InventoryView, slot: Int): Boolean
 
     fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
@@ -21,7 +19,7 @@ interface Ui {
 
     fun take(player: Player, view: InventoryView, slot: Int): Boolean
 
-    fun replace(player: Player, view: InventoryView, slot: Int): Boolean
+    fun replace(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
 
     fun canClick(slot: Int): Boolean
 
@@ -30,4 +28,6 @@ interface Ui {
     fun canTake(slot: Int): Boolean
 
     fun open(player: Player)
+
+    fun close(player: Player, reason: Reason)
 }
