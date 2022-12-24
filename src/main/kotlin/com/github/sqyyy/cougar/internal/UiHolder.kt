@@ -32,7 +32,8 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             return
         }
         event.isCancelled = ui.placeMany(
-            event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }.toMap()
+            event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }
+                .toMap()
         )
     }
 
@@ -66,7 +67,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             InventoryAction.PLACE_SOME,
             InventoryAction.PLACE_ONE,
             -> {
-                if (event.currentItem == null) {
+                if (event.cursor == null) {
                     return
                 }
                 if (!uiClick) {
@@ -79,7 +80,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     }
                     return
                 }
-                event.isCancelled = ui.place(event.whoClicked as Player, event.view, slot, event.currentItem!!)
+                event.isCancelled = ui.place(event.whoClicked as Player, event.view, slot, event.cursor!!)
             }
             InventoryAction.SWAP_WITH_CURSOR,
             InventoryAction.HOTBAR_MOVE_AND_READD,
