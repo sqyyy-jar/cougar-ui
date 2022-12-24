@@ -11,7 +11,7 @@ interface Ui {
     val rows: Int
     val slots: Int
 
-    fun click(player: Player, view: InventoryView, slot: Int): Boolean
+    fun click(player: Player, view: InventoryView, slot: Int)
 
     fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean
 
