@@ -2,6 +2,8 @@ package com.github.sqyyy.cougar.impl
 
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Slot
+import com.github.sqyyy.cougar.impl.panel.FillPanel
+import com.github.sqyyy.cougar.impl.panel.SingleSlotFillPanel
 import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.ItemStack
@@ -51,6 +53,19 @@ class PaperUiBuilder {
                 InventoryType.DROPPER,
                 -> FillPanel(from.dispenserSlot, to.dispenserSlot, fillItem, 3)
                 InventoryType.HOPPER -> FillPanel(from.hopperSlot, to.hopperSlot, fillItem, 5)
+                else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
+            }
+        )
+    }
+
+    fun put(priority: @Range(from = 0, to = 15) Int, slot: Slot, fillItem: ItemStack) {
+        panels[priority].add(
+            when (type) {
+                InventoryType.CHEST -> SingleSlotFillPanel(slot.chestSlot, fillItem)
+                InventoryType.DISPENSER,
+                InventoryType.DROPPER,
+                -> SingleSlotFillPanel(slot.dispenserSlot, fillItem)
+                InventoryType.HOPPER -> SingleSlotFillPanel(slot.hopperSlot, fillItem)
                 else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
             }
         )
