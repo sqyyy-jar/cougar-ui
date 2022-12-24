@@ -66,6 +66,9 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             InventoryAction.PLACE_SOME,
             InventoryAction.PLACE_ONE,
             -> {
+                if (event.currentItem == null) {
+                    return
+                }
                 if (!uiClick) {
                     return
                 }
@@ -106,7 +109,13 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                         }
                         return
                     }
-                    event.isCancelled = ui.place(event.whoClicked as Player, event.view, slot, event.currentItem!!)
+                    if (event.currentItem == null) {
+                        event.isCancelled = ui.place(
+                            event.whoClicked as Player, event.view, slot, event.whoClicked.inventory.getItem(event.hotbarButton)!!
+                        )
+                        return
+                    }
+                    event.isCancelled = ui.take(event.whoClicked as Player, event.view, slot)
                     return
                 }
                 if (!ui.canTake(slot)) {
@@ -146,8 +155,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     }
                     val item = inventory.getItem(i)
                     if (item == null || item.type == Material.AIR) {
-                        event.isCancelled = true
-                        event.view.bottomInventory.setItem(slot, null)
+                        event.view.bottomInventory.setItem(event.slot, null)
                         inventory.setItem(i, currentItem)
                         break
                     }
@@ -157,13 +165,11 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     if (currentItem.isSimilar(item)) {
                         val max = 64 - item.amount
                         if (max >= amount) {
-                            event.isCancelled = true
-                            event.view.bottomInventory.setItem(slot, null)
+                            event.view.bottomInventory.setItem(event.slot, null)
                             inventory.setItem(i, currentItem)
                             break
                         }
                         amount -= max
-                        event.isCancelled = true
                         item.amount = 64
                         currentItem.amount = amount
                         break
