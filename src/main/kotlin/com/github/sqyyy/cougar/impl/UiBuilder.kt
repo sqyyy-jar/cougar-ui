@@ -71,6 +71,7 @@ class PaperUiBuilder {
         )
     }
 
+    @JvmName("addPanels")
     operator fun List<List<Panel>>.unaryPlus() {
         this.forEachIndexed { index, panel ->
             if (panels.size <= index) {
@@ -80,6 +81,7 @@ class PaperUiBuilder {
         }
     }
 
+    @JvmName("addPanelPairs")
     operator fun List<Pair<Int, Panel>>.unaryPlus() {
         for (pair in this) {
             if (pair.first >= panels.size || pair.first < 0) {
