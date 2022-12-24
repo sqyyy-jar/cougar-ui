@@ -23,7 +23,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
     override fun getInventory(): Inventory = this.inventory!!
 
     fun onClose(event: InventoryCloseEvent) {
-        ui.close(event.player as Player, event.reason)
+        ui.close(event.player as Player, event.view, event.reason)
     }
 
     fun onDrag(event: InventoryDragEvent) {
