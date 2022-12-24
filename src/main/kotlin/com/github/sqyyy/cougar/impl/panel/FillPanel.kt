@@ -17,7 +17,7 @@ class FillPanel(
     override fun collidesWith(slot: Int): Boolean {
         val column: Int = Slot.getColumn(this.rowWidth, slot)
         val row: Int = Slot.getColumn(this.rowWidth, slot)
-        return row in this.startRow..this.endRow && column >= this.startColumn && column <= this.endColumn
+        return row in this.startRow..this.endRow && column in this.startColumn..this.endColumn
     }
 
     override fun canClick(slot: Int): Boolean = false
