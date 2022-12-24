@@ -88,16 +88,14 @@ class PaperUi : Ui {
         }
     }
 
-    override fun click(player: Player, view: InventoryView, slot: Int): Boolean {
-        var res = false
+    override fun click(player: Player, view: InventoryView, slot: Int) {
         for (panelList in this.panels) {
             panelList?.forEach {
                 if (it.collidesWith(slot) && it.canClick(slot)) {
-                    res = it.click(player, view, slot)
+                    it.click(player, view, slot)
                 }
             }
         }
-        return res
     }
 
     override fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean {
