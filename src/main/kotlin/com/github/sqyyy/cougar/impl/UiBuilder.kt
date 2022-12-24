@@ -79,6 +79,15 @@ class PaperUiBuilder {
             panels[index].addAll(panel)
         }
     }
+
+    operator fun List<Pair<Int, Panel>>.unaryPlus() {
+        for (pair in this) {
+            if (pair.first >= panels.size || pair.first < 0) {
+                continue
+            }
+            panels[pair.first].add(pair.second)
+        }
+    }
 }
 
 fun paperUi(builder: PaperUiBuilder.() -> Unit): PaperUi {
