@@ -29,5 +29,5 @@ interface Ui {
 
     fun open(player: Player)
 
-    fun close(player: Player, reason: Reason)
+    fun close(player: Player, view: InventoryView, reason: Reason)
 }
