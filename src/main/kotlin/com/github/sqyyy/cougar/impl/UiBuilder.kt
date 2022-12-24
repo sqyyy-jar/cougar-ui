@@ -48,11 +48,11 @@ class PaperUiBuilder {
     fun fill(priority: @Range(from = 0, to = 15) Int, from: Slot, to: Slot, fillItem: ItemStack) {
         panels[priority].add(
             when (type) {
-                InventoryType.CHEST -> FillPanel(from.chestSlot, to.chestSlot, fillItem, 9)
+                InventoryType.CHEST -> FillPanel(from.chestSlot, to.chestSlot, 9, fillItem)
                 InventoryType.DISPENSER,
                 InventoryType.DROPPER,
-                -> FillPanel(from.dispenserSlot, to.dispenserSlot, fillItem, 3)
-                InventoryType.HOPPER -> FillPanel(from.hopperSlot, to.hopperSlot, fillItem, 5)
+                -> FillPanel(from.dispenserSlot, to.dispenserSlot, 3, fillItem)
+                InventoryType.HOPPER -> FillPanel(from.hopperSlot, to.hopperSlot, 5, fillItem)
                 else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
             }
         )
