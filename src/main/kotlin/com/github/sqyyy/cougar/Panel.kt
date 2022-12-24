@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack
 interface Panel {
     fun collidesWith(slot: Int): Boolean
 
-    fun click(player: Player, view: InventoryView, slot: Int)
+    fun click(player: Player, view: InventoryView, slot: Int) = {}
 
     fun place(player: Player, view: InventoryView, slot: Int, item: ItemStack): Boolean = true
 
