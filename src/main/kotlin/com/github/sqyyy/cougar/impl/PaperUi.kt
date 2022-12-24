@@ -82,9 +82,9 @@ class PaperUi : Ui {
         }
     }
 
-    override fun close(player: Player, reason: InventoryCloseEvent.Reason) {
+    override fun close(player: Player, view: InventoryView, reason: InventoryCloseEvent.Reason) {
         for (panelList in this.panels) {
-            panelList?.forEach { it.close(player, reason) }
+            panelList?.forEach { it.close(player, view, reason) }
         }
     }
 
