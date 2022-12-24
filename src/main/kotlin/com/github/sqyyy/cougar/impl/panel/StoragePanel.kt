@@ -24,7 +24,7 @@ class StoragePanel(
 
     override fun collidesWith(slot: Int): Boolean {
         val column: Int = Slot.getColumn(this.rowWidth, slot)
-        val row: Int = Slot.getColumn(this.rowWidth, slot)
+        val row: Int = Slot.getRow(this.rowWidth, slot)
         return row in this.startRow..this.endRow && column in this.startColumn..this.endColumn
     }
 
