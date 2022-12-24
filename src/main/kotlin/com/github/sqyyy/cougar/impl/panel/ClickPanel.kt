@@ -1,4 +1,4 @@
-package com.github.sqyyy.cougar.impl
+package com.github.sqyyy.cougar.impl.panel
 
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Slot
