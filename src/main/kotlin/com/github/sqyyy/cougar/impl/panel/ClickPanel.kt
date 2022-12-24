@@ -8,8 +8,8 @@ import org.bukkit.inventory.InventoryView
 class ClickPanel(
     private val startSlot: Int,
     private val endSlot: Int,
-    private val callback: (player: Player, view: InventoryView, slot: Int) -> Unit,
     private val rowWidth: Int,
+    private val clickCallback: (player: Player, view: InventoryView, slot: Int) -> Unit,
 ) : Panel {
     private val startRow = Slot.getRow(this.rowWidth, this.startSlot)
     private val startColumn = Slot.getColumn(this.rowWidth, this.startSlot)
@@ -22,7 +22,7 @@ class ClickPanel(
         return row in this.startRow..this.endRow && column >= this.startColumn && column <= this.endColumn
     }
 
-    override fun click(player: Player, view: InventoryView, slot: Int) = this.callback(player, view, slot)
+    override fun click(player: Player, view: InventoryView, slot: Int) = this.clickCallback(player, view, slot)
 
     override fun canClick(slot: Int): Boolean = true
 

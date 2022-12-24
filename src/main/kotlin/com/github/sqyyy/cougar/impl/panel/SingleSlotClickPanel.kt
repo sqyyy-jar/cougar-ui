@@ -6,11 +6,11 @@ import org.bukkit.inventory.InventoryView
 
 class SingleSlotClickPanel(
     private val slot: Int,
-    private val callback: (player: Player, view: InventoryView, slot: Int) -> Unit,
+    private val clickCallback: (player: Player, view: InventoryView, slot: Int) -> Unit,
 ) : Panel {
     override fun collidesWith(slot: Int): Boolean = slot == this.slot
 
-    override fun click(player: Player, view: InventoryView, slot: Int) = this.callback(player, view, slot)
+    override fun click(player: Player, view: InventoryView, slot: Int) = this.clickCallback(player, view, slot)
 
     override fun canClick(slot: Int): Boolean = true
 
