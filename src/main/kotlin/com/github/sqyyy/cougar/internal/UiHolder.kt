@@ -32,8 +32,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             return
         }
         event.isCancelled = ui.placeMany(
-            event.whoClicked as Player, event.view,
-            event.newItems.filter { it.key < ui.slots }.toMap()
+            event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }.toMap()
         )
     }
 
@@ -140,6 +139,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                 }
                 val inventory = this.inventory!!
                 var amount = currentItem.amount
+                event.isCancelled = true
                 for (i in 0 until ui.slots) {
                     if (!ui.canPlace(i)) {
                         continue
