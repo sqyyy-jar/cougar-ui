@@ -2,11 +2,17 @@ package com.github.sqyyy.cougar.impl
 
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Slot
+import com.github.sqyyy.cougar.impl.panel.CloseEventPanel
 import com.github.sqyyy.cougar.impl.panel.FillPanel
 import com.github.sqyyy.cougar.impl.panel.FrameFillPanel
+import com.github.sqyyy.cougar.impl.panel.OpenEventPanel
 import com.github.sqyyy.cougar.impl.panel.SingleSlotFillPanel
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Player
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryType
+import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
 import org.jetbrains.annotations.Range
 import kotlin.math.max
@@ -83,6 +89,19 @@ class PaperUiBuilder {
                 else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
             }
         )
+    }
+
+    @JvmOverloads
+    fun onOpen(priority: @Range(from = 0, to = 15) Int = 0, openCallback: (player: Player, inventory: Inventory) -> Unit) {
+        panels[priority].add(OpenEventPanel(openCallback))
+    }
+
+    @JvmOverloads
+    fun onClose(
+        priority: @Range(from = 0, to = 15) Int = 0,
+        closeCallback: (player: Player, view: InventoryView, reason: InventoryCloseEvent.Reason) -> Unit,
+    ) {
+        panels[priority].add(CloseEventPanel(closeCallback))
     }
 
     @JvmName("addPanels")
