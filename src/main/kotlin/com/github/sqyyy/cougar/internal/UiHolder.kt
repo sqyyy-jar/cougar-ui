@@ -13,14 +13,14 @@ import org.bukkit.inventory.InventoryHolder
 class UiHolder(private val ui: Ui) : InventoryHolder {
     private var inventory: Inventory? = null
 
+    override fun getInventory(): Inventory = this.inventory!!
+
     fun setInventory(inventory: Inventory) {
         if (this.inventory != null) {
             throw IllegalStateException("Inventory already set")
         }
         this.inventory = inventory
     }
-
-    override fun getInventory(): Inventory = this.inventory!!
 
     fun onClose(event: InventoryCloseEvent) {
         ui.close(event.player as Player, event.view, event.reason)
@@ -31,10 +31,8 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             event.isCancelled = true
             return
         }
-        event.isCancelled = ui.placeMany(
-            event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }
-                .toMap()
-        )
+        event.isCancelled = ui.placeMany(event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }
+            .toMap())
     }
 
     fun onClick(event: InventoryClickEvent, @Suppress("UNUSED_PARAMETER") creative: Boolean) {
