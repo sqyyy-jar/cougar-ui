@@ -5,7 +5,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
-class SingleSlotFillPanel(private val slot: Int, private val fillItem: ItemStack) : Panel {
+class SingleSlotFillPanel(private val slot: Int, private val fillItem: ItemStack?) : Panel {
     override fun collidesWith(slot: Int): Boolean = slot == this.slot
 
     override fun canClick(slot: Int): Boolean = false
