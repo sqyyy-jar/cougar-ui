@@ -7,7 +7,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 class FillPanel(
-    private val startSlot: Int, private val endSlot: Int, private val rowWidth: Int, private val fillItem: ItemStack,
+    private val startSlot: Int, private val endSlot: Int, private val rowWidth: Int, private val fillItem: ItemStack?,
 ) : Panel {
     private val startRow = Slot.getRow(this.rowWidth, this.startSlot)
     private val startColumn = Slot.getColumn(this.rowWidth, this.startSlot)
