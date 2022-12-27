@@ -24,11 +24,7 @@ class PaperUi : Ui {
     private val takeMap: BooleanArray
 
     @JvmOverloads
-    constructor(
-        title: Component,
-        rows: @Range(from = 1.toLong(), to = 6.toLong()) Int,
-        panels: List<List<Panel>> = listOf(),
-    ) : this(
+    constructor(title: Component, rows: @Range(from = 1, to = 6) Int, panels: List<List<Panel>> = listOf()) : this(
         title, InventoryType.CHEST, rows, rows * 9, panels
     )
 
@@ -79,12 +75,6 @@ class PaperUi : Ui {
                     }
                 }
             }
-        }
-    }
-
-    override fun close(player: Player, view: InventoryView, reason: InventoryCloseEvent.Reason) {
-        for (panelList in this.panels) {
-            panelList?.forEach { it.close(player, view, reason) }
         }
     }
 
@@ -168,5 +158,11 @@ class PaperUi : Ui {
             panelList?.forEach { it.open(player, inventory) }
         }
         player.openInventory(inventory)
+    }
+
+    override fun close(player: Player, view: InventoryView, reason: InventoryCloseEvent.Reason) {
+        for (panelList in this.panels) {
+            panelList?.forEach { it.close(player, view, reason) }
+        }
     }
 }
