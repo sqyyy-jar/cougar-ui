@@ -164,8 +164,8 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     if (currentItem.isSimilar(item)) {
                         val max = 64 - item.amount
                         if (max >= amount) {
+                            item.amount += amount
                             event.view.bottomInventory.setItem(event.slot, null)
-                            inventory.setItem(i, currentItem)
                             break
                         }
                         amount -= max
