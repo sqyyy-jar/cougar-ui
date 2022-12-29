@@ -1,5 +1,6 @@
 package com.github.sqyyy.cougar.internal
 
+import com.github.sqyyy.cougar.Cougar
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -12,7 +13,9 @@ class SystemListener : Listener {
     fun onClose(event: InventoryCloseEvent) {
         val holder = event.view.topInventory.holder
         if (holder is UiHolder) {
+            Cougar.UnsafeValues.inventoryCloseEvent = event
             holder.onClose(event)
+            Cougar.UnsafeValues.inventoryCloseEvent = null
         }
     }
 
@@ -20,7 +23,9 @@ class SystemListener : Listener {
     fun onDrag(event: InventoryDragEvent) {
         val holder = event.view.topInventory.holder
         if (holder is UiHolder) {
+            Cougar.UnsafeValues.inventoryDragEvent = event
             holder.onDrag(event)
+            Cougar.UnsafeValues.inventoryDragEvent = null
         }
     }
 
@@ -28,7 +33,9 @@ class SystemListener : Listener {
     fun onClick(event: InventoryClickEvent) {
         val holder = event.view.topInventory.holder
         if (holder is UiHolder) {
+            Cougar.UnsafeValues.inventoryClickEvent = event
             holder.onClick(event, event is InventoryCreativeEvent)
+            Cougar.UnsafeValues.inventoryClickEvent = null
         }
     }
 }
