@@ -3,7 +3,7 @@ package com.github.sqyyy.cougar.impl.panel
 import org.bukkit.entity.Player
 import org.bukkit.inventory.InventoryView
 
-class SingleSlotClickPanel(
+class SlotClickEventPanel(
     slot: Int,
     private val clickCallback: (player: Player, view: InventoryView, slot: Int) -> Unit,
 ) : AbstractSlotPanel(slot) {
