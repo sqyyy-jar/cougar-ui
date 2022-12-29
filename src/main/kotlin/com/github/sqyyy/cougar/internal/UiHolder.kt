@@ -157,6 +157,7 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                     if (item == null || item.type == Material.AIR) {
                         event.view.bottomInventory.setItem(event.slot, null)
                         inventory.setItem(i, currentItem)
+                        ui.place(event.whoClicked as Player, event.view, i, currentItem)
                         break
                     }
                     if (item.amount >= 64) {
@@ -167,11 +168,13 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
                         if (max >= amount) {
                             item.amount += amount
                             event.view.bottomInventory.setItem(event.slot, null)
+                            ui.place(event.whoClicked as Player, event.view, i, item)
                             break
                         }
                         amount -= max
                         item.amount = 64
                         currentItem.amount = amount
+                        ui.place(event.whoClicked as Player, event.view, i, item)
                         break
                     }
                 }
