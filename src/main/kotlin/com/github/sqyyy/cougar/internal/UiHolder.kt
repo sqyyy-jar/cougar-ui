@@ -31,8 +31,9 @@ class UiHolder(private val ui: Ui) : InventoryHolder {
             event.isCancelled = true
             return
         }
-        event.isCancelled = ui.placeMany(event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }
-            .toMap())
+        event.isCancelled = ui.placeMany(
+            event.whoClicked as Player, event.view, event.newItems.filter { it.key < ui.slots }
+                .toMap())
     }
 
     fun onClick(event: InventoryClickEvent, @Suppress("UNUSED_PARAMETER") creative: Boolean) {
