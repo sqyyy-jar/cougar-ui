@@ -4,7 +4,6 @@ import com.github.sqyyy.cougar.Cougar
 import com.github.sqyyy.cougar.Panel
 import com.github.sqyyy.cougar.Slot
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryView
 import org.bukkit.inventory.ItemStack
@@ -13,8 +12,6 @@ class StoragePanel(
     private val startSlot: Int,
     private val endSlot: Int,
     private val rowWidth: Int,
-    private val openCallback: (Player, Inventory) -> Unit = { _, _ -> },
-    private val closeCallback: (Player, InventoryView, InventoryCloseEvent.Reason) -> Unit = { _, _, _ -> },
     private val updateCallback: (Player, InventoryView) -> Unit = { _, _ -> },
 ) : Panel {
     private val startRow = Slot.getRow(this.rowWidth, this.startSlot)
@@ -54,11 +51,6 @@ class StoragePanel(
                 inventory.setItem(row * this.rowWidth + column, null)
             }
         }
-        openCallback(player, inventory)
-    }
-
-    override fun close(player: Player, view: InventoryView, reason: InventoryCloseEvent.Reason) {
-        closeCallback(player, view, reason)
     }
 
     override fun canClick(slot: Int): Boolean = false
