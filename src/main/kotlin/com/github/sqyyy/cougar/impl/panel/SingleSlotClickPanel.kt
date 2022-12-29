@@ -1,15 +1,12 @@
 package com.github.sqyyy.cougar.impl.panel
 
-import com.github.sqyyy.cougar.Panel
 import org.bukkit.entity.Player
 import org.bukkit.inventory.InventoryView
 
 class SingleSlotClickPanel(
-    private val slot: Int,
+    slot: Int,
     private val clickCallback: (player: Player, view: InventoryView, slot: Int) -> Unit,
-) : Panel {
-    override fun collidesWith(slot: Int): Boolean = slot == this.slot
-
+) : AbstractSlotPanel(slot) {
     override fun click(player: Player, view: InventoryView, slot: Int) = this.clickCallback(player, view, slot)
 
     override fun canClick(slot: Int): Boolean = true
