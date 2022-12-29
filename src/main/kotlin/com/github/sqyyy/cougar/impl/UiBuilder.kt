@@ -6,7 +6,7 @@ import com.github.sqyyy.cougar.impl.panel.CloseEventPanel
 import com.github.sqyyy.cougar.impl.panel.FillPanel
 import com.github.sqyyy.cougar.impl.panel.FrameFillPanel
 import com.github.sqyyy.cougar.impl.panel.OpenEventPanel
-import com.github.sqyyy.cougar.impl.panel.SingleSlotFillPanel
+import com.github.sqyyy.cougar.impl.panel.SlotFillPanel
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
@@ -81,11 +81,11 @@ class PaperUiBuilder {
     fun put(priority: @Range(from = 0, to = 15) Int, slot: Slot, fillItem: ItemStack) {
         panels[priority].add(
             when (type) {
-                InventoryType.CHEST -> SingleSlotFillPanel(slot.chestSlot, fillItem)
+                InventoryType.CHEST -> SlotFillPanel(slot.chestSlot, fillItem)
                 InventoryType.DISPENSER,
                 InventoryType.DROPPER,
-                -> SingleSlotFillPanel(slot.dispenserSlot, fillItem)
-                InventoryType.HOPPER -> SingleSlotFillPanel(slot.hopperSlot, fillItem)
+                -> SlotFillPanel(slot.dispenserSlot, fillItem)
+                InventoryType.HOPPER -> SlotFillPanel(slot.hopperSlot, fillItem)
                 else -> throw IllegalArgumentException("Unsupported InventoryType was provided")
             }
         )

@@ -4,7 +4,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
-class SingleSlotFillPanel(slot: Int, private val fillItem: ItemStack?) : AbstractSlotPanel(slot) {
+class SlotFillPanel(slot: Int, private val fillItem: ItemStack?) : AbstractSlotPanel(slot) {
     override fun canClick(slot: Int): Boolean = false
 
     override fun canPlace(slot: Int): Boolean = false
